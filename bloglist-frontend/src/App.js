@@ -82,15 +82,15 @@ const App = () => {
 
         <Switch>
           <Route path="/blogs/:id">
-            <Blog blogs={blogs} />
+            {user ? <Blog blogs={blogs} /> : <LoginForm />}
           </Route>
 
           <Route path="/users/:id">
-            <User users= {users} />
+            {user ? <User users= {users} /> : <LoginForm />}
           </Route>
 
           <Route path="/users">
-            <Users users = {users} />
+            {user ? <Users users = {users} /> : <LoginForm />}
           </Route>
 
           <Route path='/login'>
