@@ -1,21 +1,28 @@
 import React, { useEffect } from 'react'
 import blogService from './services/blogs'
-import { Blogs } from './components/Blog.js'
+import Blog, { Blogs } from './components/Blog.js'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import Menu from './components/Menu'
+import Users,{ User } from './components/Users'
 import { initialBlogs } from './reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { logIn, logOut } from './reducers/userReducer'
+import { logIn } from './reducers/userReducer'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import { initialUsers } from './reducers/usersReducer'
 
 const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
+  const blogs = useSelector(state => state.blogs)
+  const users = useSelector(state => state.users)
   const notify = useSelector(state => state.notify)
 
   useEffect (() => {
     dispatch(initialBlogs())
+    dispatch(initialUsers())
   }, [notify])
 
   useEffect(() => {
@@ -27,12 +34,6 @@ const App = () => {
     }
   },[])
 
-  const handleLogout = (event) => {
-    event.preventDefault()
-    window.localStorage.removeItem('loggedBlogappUser')
-    dispatch(logOut())
-  }
-
   const blogForm = () => {
     return(
       <Togglable buttonLabel="create new blog">
@@ -43,17 +44,41 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1> {user === null ? 'Log in to application' : 'Blogs' } </h1>
+      <div>
+        {user === null
+          ? <h1>Log in to application </h1>
+          : <Menu user={user}/>
+        }
+      </div>
       <Notification id="notification" />
 
-      {user === null
-        ? <LoginForm />
-        : <div>
-            {user.name} logged in <button onClick={handleLogout}>logout</button>
-            { blogForm() }
-            <Blogs />
-          </div>
-      }
+      <Switch>
+        <Route path="/blogs/:id">
+          <Blog blogs={blogs} />
+        </Route>
+
+        <Route path="/users/:id">
+          <User users= {users} />
+        </Route>
+
+        <Route path="/users">
+          <Users users = {users} />
+        </Route>
+
+        <Route path='/login'>
+          {user ? <Redirect to ='/' /> : <LoginForm />}
+        </Route>
+
+        <Route path="/">
+          {user
+            ? <div>
+                {blogForm()}
+                <Blogs />
+              </div>
+            : <Redirect to='/login' />
+          }
+        </Route>
+      </Switch>
     </div>
   )
 }

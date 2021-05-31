@@ -23,6 +23,13 @@ export const addNotification = (blog) => {
   }
 }
 
+export const addComment = (comment) => {
+  return {
+    message: `Your comment ${comment} has been added`,
+    style: 'success'
+  }
+}
+
 export const removeNotification = (blog) => {
   return  {
     message: `Blog ${blog.title} ${blog.author} has been removed successfully`,

@@ -10,19 +10,15 @@ const userReducer = (state=null, action) => {
 }
 
 export const logIn = (user) => {
-  return dispatch => {
-      dispatch({
-        type:'LOGGED_IN',
-        data: user
-      })
+  return {
+    type:'LOGGED_IN',
+    data: user
   }
 }
 
 export const logOut = () => {
-  return dispatch => {
-    dispatch({
+  return {
       type:'LOG_IN',
-    })
   }
 }
 
