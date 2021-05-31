@@ -3,14 +3,15 @@ import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { logIn } from '../reducers/userReducer'
 import { useDispatch } from 'react-redux'
-import { failedLogin, setNotification } from '../reducers/notificationReducer'
+import { failedLogin, setNotification, successLogin } from '../reducers/notificationReducer'
 import useField from '../hooks/useField'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
 
   const username = useField('username','text')
-  const password = useField('password','text')
+  const password = useField('password','password')
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -22,6 +23,7 @@ const LoginForm = () => {
       })
       blogService.setToken(user.token)
       dispatch(logIn(user))
+      dispatch(setNotification(successLogin(user),5))
       username.resetValue()
       password.resetValue()
 
@@ -37,15 +39,14 @@ const LoginForm = () => {
 
   return (
     <div>
-      <form onSubmit = {handleLogin}>
-        <div>
-          username <input {...username.field} />
-        </div>
-        <div>
-          password <input {...password.field} />
-        </div>
-        <button id='login-button' type ="submit">login</button>
-      </form>
+      <h1>Log in to application </h1>
+      <Form onSubmit = {handleLogin}>
+        <Form.Label>username:</Form.Label>
+        <Form.Control {...username.field} />
+        <Form.Label>password:</Form.Label>
+        <Form.Control {...password.field} />
+        <Button variant="primary" type ="submit">login</Button>
+      </Form>
     </div>
   )
 }

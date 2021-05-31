@@ -23,9 +23,9 @@ export const addNotification = (blog) => {
   }
 }
 
-export const addComment = (comment) => {
+export const commentNotification = (comment) => {
   return {
-    message: `Your comment ${comment} has been added`,
+    message: `Your comment: "${comment}" has been added`,
     style: 'success'
   }
 }
@@ -33,14 +33,21 @@ export const addComment = (comment) => {
 export const removeNotification = (blog) => {
   return  {
     message: `Blog ${blog.title} ${blog.author} has been removed successfully`,
-    style: 'error'
+    style: 'danger'
   }
 }
 
 export const failedLogin = () => {
   return  {
     message: 'wrong username or password',
-    style: 'error'
+    style: 'danger'
+  }
+}
+
+export const successLogin = (user) => {
+  return  {
+    message: `Welcome ${user.name}`,
+    style: 'success'
   }
 }
 

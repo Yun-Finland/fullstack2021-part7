@@ -7,11 +7,11 @@ const useComment = (type) => {
     setValue(event.target.value)
   }
 
-  const resetValue = () => { setValue('')}
+  const resetValue = () => { setValue('')  }
 
   return{
     field:{
-      type:type,
+      type: type,
       value: value,
       onChange: onChange
     },

@@ -4,6 +4,7 @@ import { addNotification, setNotification } from '../reducers/notificationReduce
 import { addBlog } from '../reducers/blogReducer'
 import { handleStatusChange } from '../reducers/togglableReducer'
 import useField from '../hooks/useField'
+import { Form, Button } from 'react-bootstrap'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -34,19 +35,16 @@ const BlogForm = () => {
 
   return (
     <div>
-      <form onSubmit={addNewBlog}>
+      <Form onSubmit={addNewBlog}>
         <h1>create new blog</h1>
-        <div>
-          Title: <input {...title.field}/>
-        </div>
-        <div>
-          Author: <input {...author.field} />
-        </div>
-        <div>
-          url: <input {...url.field} />
-        </div>
-        <button id='createBlog' type = "submit">create</button>
-      </form>
+        <Form.Label>Title: </Form.Label>
+        <Form.Control {...title.field}/>
+        <Form.Label>Author: </Form.Label>
+        <Form.Control {...author.field} />
+        <Form.Label>Url:</Form.Label>
+        <Form.Control {...url.field} />
+        <Button variant="primary" id='createBlog' type = "submit">create</Button>
+      </Form>
     </div>
   )
 }
