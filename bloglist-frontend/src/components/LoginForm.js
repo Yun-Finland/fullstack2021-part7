@@ -38,17 +38,40 @@ const LoginForm = () => {
   }
 
   return (
+    <Form onSubmit = {handleLogin}>
+      <h1>Log in to application </h1>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Username</Form.Label>
+        <Form.Control {...username.field} placeholder="Enter Username" />
+        <Form.Text className="text-muted">
+          We will never share your info with anyone else.
+        </Form.Text>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control {...password.field} placeholder="Password" />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Check type="checkbox" label="Check me out" />
+      </Form.Group>
+      <Button variant="primary" type="submit" >
+        Log in
+      </Button>
+    </Form>
+  )
+}
+
+export default LoginForm
+
+/*
     <div>
       <h1>Log in to application </h1>
       <Form onSubmit = {handleLogin}>
-        <Form.Label>username:</Form.Label>
+        <Form.Label>Username:</Form.Label>
         <Form.Control {...username.field} />
         <Form.Label>password:</Form.Label>
         <Form.Control {...password.field} />
         <Button variant="primary" type ="submit">login</Button>
       </Form>
     </div>
-  )
-}
-
-export default LoginForm
+*/

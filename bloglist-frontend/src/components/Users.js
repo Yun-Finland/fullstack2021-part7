@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Table } from 'react-bootstrap'
+import { Table, Card, ListGroup } from 'react-bootstrap'
 
 export const User = ({ users }) => {
   if(!users){
@@ -17,19 +17,21 @@ export const User = ({ users }) => {
   const blogs = findUser.blogs
 
   return(
-    <div>
-      <Table striped>
-        <tbody>
-          <h1>{findUser.name}</h1>
-          <h3>added blogs</h3>
+    <Card>
+      <Card.Header as="h4">User: {findUser.name}</Card.Header>
+      <Card.Body>
+        <ListGroup as="ul">
           {blogs.map(blog =>
-            <tr key={blog.id}>
-             <td>{blog.title}</td>
-            </tr>
+            <ListGroup.Item as="li" key={blog.id} >
+              <Link to={`/blogs/${blog.id}`} >
+                {blog.title}
+              </Link>
+            </ListGroup.Item>
           )}
-        </tbody>
-      </Table>
-    </div>
+        </ListGroup>
+      </Card.Body>
+      <Card.Footer>Total {blogs.length} blogs have been added!</Card.Footer>
+    </Card>
   )
 }
 
@@ -50,14 +52,16 @@ const Users = ({ users }) => {
   return(
     <div>
       <h1>Users</h1>
-      <Table striped >
+      <Table striped bordered hover responsive="lg" >
         <tbody>
           <tr>
-            <td></td>
-            <th>blogs created</th>
+            <th>#</th>
+            <th>Users</th>
+            <th>Blogs Created Number</th>
           </tr>
-          {tableData.map(user =>
+          {tableData.map((user,i) =>
             <tr key={user.id}>
+              <td>{i + 1}</td>
               <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
               <td>{user.length}</td>
             </tr>

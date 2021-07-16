@@ -23,7 +23,8 @@ const Togglable = ((props) => {
       </div>
       <div style={showWhenVisible}>
         {props.children}
-        <Button variant = "primary" onClick={toggleVisibility}>cancel</Button>
+        <br/>
+        <Button variant = "primary" onClick={toggleVisibility}>Cancel</Button>
       </div>
     </div>
   )

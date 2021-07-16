@@ -4,7 +4,7 @@ import { addNotification, setNotification } from '../reducers/notificationReduce
 import { addBlog } from '../reducers/blogReducer'
 import { handleStatusChange } from '../reducers/togglableReducer'
 import useField from '../hooks/useField'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Card } from 'react-bootstrap'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const BlogForm = () => {
 
     const blogObject = {
       title: title.field.value,
-      author: author.field.vlaue,
+      author: author.field.value,
       url: url.field.value,
       user: user.id,
     }
@@ -34,7 +34,32 @@ const BlogForm = () => {
   }
 
   return (
-    <div>
+    <Card>
+      <Card.Header as="h5">Create New Blog</Card.Header>
+      <Card.Body>
+        <Form onSubmit = {addNewBlog}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Blog Title</Form.Label>
+            <Form.Control {...title.field} placeholder="Enter the Title " />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Blog Author</Form.Label>
+            <Form.Control {...author.field} placeholder="Enter the Author" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Blog Url</Form.Label>
+            <Form.Control {...url.field} placeholder="Enter the url" />
+          </Form.Group>
+          <Button variant="primary" id='createBlog' type = "submit">Create</Button>
+        </Form>
+      </Card.Body>
+    </Card>
+  )
+}
+
+export default BlogForm
+
+/*
       <Form onSubmit={addNewBlog}>
         <h1>create new blog</h1>
         <Form.Label>Title: </Form.Label>
@@ -45,8 +70,4 @@ const BlogForm = () => {
         <Form.Control {...url.field} />
         <Button variant="primary" id='createBlog' type = "submit">create</Button>
       </Form>
-    </div>
-  )
-}
-
-export default BlogForm
+*/

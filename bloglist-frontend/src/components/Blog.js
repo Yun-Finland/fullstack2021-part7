@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { voteLikes, removeBlog, addComment } from '../reducers/blogReducer'
 import { setNotification, voteNotification, removeNotification, commentNotification } from '../reducers/notificationReducer'
 import  useComment from '../hooks/useComment'
-import { Table, Button, Form } from 'react-bootstrap'
+import { Table, Button, Form, Card } from 'react-bootstrap'
 
 const Blog = ({ blogs }) => {
   const id = useParams().id
@@ -46,25 +46,27 @@ const Blog = ({ blogs }) => {
   }
 
   return (
-    <div className='blog'>
-      <h1>{blog.title} {blog.author}</h1>
-      <a href={blog.url}>{blog.url}</a>
-      <p>{blog.likes} likes <Button variant="secondary" onClick={increaseLikes} className='likesButton'>like</Button></p>
-      <p>added by {blog.user.name}</p>
-      { blog.user.id === user.id
-          ? <button className='removeButton' onClick={removeHandle}>remove</button>
-          : null
-      }
-      <h2>Comments</h2>
-      <Form onSubmit={handleComment}>
-        <Form.Label>Add comment: </Form.Label>
-        <Form.Control {...comment.field}/>
-        <Button variant="primary" type = "submit">add</Button>
-      </Form>
-      <div>
-      {blog.comments.map(comment => <li key={blog.id}>{comment}</li>)}
-      </div>
-    </div>
+    <Card>
+      <Card.Header as="h4">{blog.title} {blog.author}</Card.Header>
+      <Card.Body>
+        <a href={blog.url}>{blog.url}</a>
+        <p>{blog.likes} likes <Button variant="secondary" onClick={increaseLikes} className='likesButton'>like</Button></p>
+        <p>Added By User: {blog.user.name}</p>
+        { blog.user.id === user.id
+            ? <button className='removeButton' onClick={removeHandle}>remove</button>
+            : null
+        }
+        <h2>Comments</h2>
+        <Form onSubmit={handleComment}>
+          <Form.Label>Add comment: </Form.Label>
+          <Form.Control {...comment.field} />
+          <Button variant="primary" type = "submit">add</Button>
+        </Form>
+        <div>
+        {blog.comments.map(comment => <li key={blog.id}>{comment}</li>)}
+        </div>
+      </Card.Body>
+    </Card>
   )
 }
 
@@ -78,12 +80,23 @@ export const Blogs = () => {
 
   return (
     <div>
-      <Table striped>
+      <Table striped bordered hover responsive="lg">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Blog Title</th>
+            <th>Blog Author</th>
+          </tr>
+        </thead>
         <tbody>
-          { blogs.sort((a,b) => b.likes - a.likes).map(blog =>
+          { blogs.sort((a,b) => b.likes - a.likes).map((blog, i) =>
             <tr key={blog.id}>
+              <td>{i+1}</td>
               <td >
-                <Link to={`/blogs/${blog.id}`} >{blog.title} {blog.author}</Link>
+                <Link to={`/blogs/${blog.id}`} >{blog.title}</Link>
+              </td>
+              <td>
+                {blog.author}
               </td>
             </tr>
           )}
