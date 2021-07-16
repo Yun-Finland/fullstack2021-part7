@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Table, Card, ListGroup } from 'react-bootstrap'
+import { FaUserCog } from 'react-icons/fa'
 
 export const User = ({ users }) => {
   if(!users){
@@ -18,7 +19,7 @@ export const User = ({ users }) => {
 
   return(
     <Card>
-      <Card.Header as="h4">User: {findUser.name}</Card.Header>
+      <Card.Header as="h4"> <FaUserCog /> {findUser.name}</Card.Header>
       <Card.Body>
         <ListGroup as="ul">
           {blogs.map(blog =>

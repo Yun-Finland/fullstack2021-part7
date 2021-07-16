@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { voteLikes, removeBlog, addComment } from '../reducers/blogReducer'
 import { setNotification, voteNotification, removeNotification, commentNotification } from '../reducers/notificationReducer'
 import  useComment from '../hooks/useComment'
-import { Table, Button, Form, Card } from 'react-bootstrap'
+import { Table, Button, Form, Card, Row, Col, ButtonGroup } from 'react-bootstrap'
+import { FaRegHeart, FaLink, FaBlogger, FaUserEdit, FaRegCommentAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 const Blog = ({ blogs }) => {
   const id = useParams().id
@@ -47,20 +48,32 @@ const Blog = ({ blogs }) => {
 
   return (
     <Card>
-      <Card.Header as="h4">{blog.title} {blog.author}</Card.Header>
+      <Card.Header as="h4">
+        <Card.Text><FaBlogger/> {blog.title} </Card.Text>
+        <Card.Subtitle><FaUserEdit/> {blog.author} </Card.Subtitle>
+      </Card.Header>
       <Card.Body>
-        <a href={blog.url}>{blog.url}</a>
-        <p>{blog.likes} likes <Button variant="secondary" onClick={increaseLikes} className='likesButton'>like</Button></p>
-        <p>Added By User: {blog.user.name}</p>
+        <Card.Text><FaLink/> <a href={blog.url}>{blog.url}</a> </Card.Text>
+        <Card.Text>Added By User: {blog.user.name}</Card.Text>
+        <ButtonGroup aria-label="Basic example">
+          <Button onClick={increaseLikes} className='likesButton' variant="secondary"> <FaRegHeart/> {blog.likes} Likes</Button>
+          <Button variant="secondary">Comments</Button>
+          <Button variant="secondary">Right</Button>
+        </ButtonGroup>
         { blog.user.id === user.id
-            ? <button className='removeButton' onClick={removeHandle}>remove</button>
+            ? <button className='removeButton' onClick={removeHandle}><FaRegTrashAlt/> remove</button>
             : null
         }
-        <h2>Comments</h2>
+        <Card.Text> <FaRegCommentAlt/> Comments</Card.Text>
         <Form onSubmit={handleComment}>
-          <Form.Label>Add comment: </Form.Label>
-          <Form.Control {...comment.field} />
-          <Button variant="primary" type = "submit">add</Button>
+          <Row className="align-items-center">
+            <Col >
+            <Form.Control as="textarea" rows={2} {...comment.field} placeholder="Write a comment"/>
+            </Col>
+            <Col xs="auto">
+            <Button variant="outline-secondary" id="button-addon2" type = "submit">add</Button>
+            </Col>
+          </Row>
         </Form>
         <div>
         {blog.comments.map(comment => <li key={blog.id}>{comment}</li>)}
@@ -107,3 +120,10 @@ export const Blogs = () => {
 }
 
 export default Blog
+
+/*
+        <Form onSubmit={handleComment}>
+          <Form.Control {...comment.field} placeholder="Write a comment" />
+          <Button variant="primary" type = "submit">add</Button>
+        </Form>
+        */
