@@ -11,14 +11,14 @@ const notificationReducer = (state=null, action) => {
 
 export const voteNotification = (blog) => {
   return {
-    message: `Likes of blog ${blog.title} ${blog.author} is increased by 1`,
+    message: `Thanks for your Likes of blog ${blog.title}, written by ${blog.author}`,
     style: 'success'
   }
 }
 
 export const addNotification = (blog) => {
   return {
-    message: `a new blog ${blog.title} ${blog.author} added`,
+    message: `A new blog ${blog.title}, Written by ${blog.author} added`,
     style: 'success'
   }
 }

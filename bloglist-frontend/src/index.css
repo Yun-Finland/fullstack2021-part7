@@ -24,11 +24,18 @@ code {
   padding: 20px;
 }
 
-.removeButton {
-  background: rgb(0, 195, 255);
-  border-radius: 5px;
-  border-style: none;
-  font-size: 17px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.main-footer {
+  margin-top: 0.5rem;
+  font-size: 14px;
+  padding: 0.5rem;
+  background-color: lightgray;
+  position: fixed;
+  left:0;
+  bottom: 0;
+  width: 100%;
+  text-align:center;
+}
+
+.main-body {
+  margin-bottom: 100px;
 }
